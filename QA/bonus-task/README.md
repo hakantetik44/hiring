@@ -4,99 +4,100 @@
 End-to-end test automation suite for the **fulll.fr** production website. Built with Cypress, Cucumber (BDD), and Allure for professional reporting.
 
 ## Tech Stack
-- **Cypress** - E2E testing framework
-- **Cucumber/Gherkin** - BDD test scenarios
-- **TypeScript** - Type-safe code
-- **Allure** - Test reporting with screenshots and videos
-- **Page Object Model** - Maintainable test architecture
+| Technology | Purpose |
+|------------|---------|
+| Cypress | E2E testing framework |
+| Cucumber/Gherkin | BDD test scenarios |
+| TypeScript | Type-safe code |
+| Allure | Test reporting with screenshots and videos |
+| Jenkins | CI/CD pipeline automation |
+| Page Object Model | Maintainable test architecture |
 
 ## Project Structure
 ```
-cypress/
-├── e2e/
-│   └── fulll_site.feature       # Gherkin test scenarios
-├── support/
-│   ├── locators/
-│   │   └── FulllSiteLocators.ts # CSS selectors
-│   ├── pages/
-│   │   ├── BasePage.ts          # Common actions
-│   │   ├── FulllHomePage.ts     # Homepage interactions
-│   │   └── FulllContactPage.ts  # Contact form interactions
-│   ├── step_definitions/
-│   │   └── fulll_site.steps.ts  # Step implementations
-│   └── e2e.ts                   # Global config
-├── videos/                      # Test recordings
-└── screenshots/                 # Failure screenshots
+QA/bonus-task/
+├── cypress/
+│   ├── e2e/
+│   │   └── fulll_site.feature       # Gherkin test scenarios
+│   └── support/
+│       ├── locators/
+│       │   └── FulllSiteLocators.ts # CSS selectors
+│       ├── pages/
+│       │   ├── BasePage.ts          # Common actions
+│       │   ├── FulllHomePage.ts     # Homepage interactions
+│       │   └── FulllContactPage.ts  # Contact form interactions
+│       ├── step_definitions/
+│       │   └── fulll_site.steps.ts  # Step implementations
+│       └── e2e.ts                   # Global config
+├── cypress.config.ts                # Cypress configuration
+├── package.json
+└── README.md
 ```
 
 ## Installation
 ```bash
+cd QA/bonus-task
 npm install
 ```
 
 ## Running Tests
 
-### Headless Mode (CI/CD)
-```bash
-npm test
-```
-
-### Interactive Mode (Development)
-```bash
-npm run cypress:open
-```
-
-### With Allure Report (Recommended)
-```bash
-npm run test:allure
-```
-This command:
-1. Runs all tests headlessly
-2. Generates Allure report
-3. Opens report in browser automatically
-
-## Allure Commands
-
 | Command | Description |
 |---------|-------------|
-| `npm run test:allure` | Run tests + generate + open report |
-| `npm run allure:report` | Generate report from results |
-| `npm run allure:open` | Open existing report |
-| `npm run allure:clear` | Clean all report data |
+| `npm test` | Run tests headlessly |
+| `npm run cypress:open` | Open Cypress interactive mode |
+| `npm run test:allure` | Run tests + generate + open Allure report |
+| `npm run allure:report` | Generate Allure report |
+| `npm run allure:open` | Open existing Allure report |
+| `npm run allure:clear` | Clean report data |
 
 ## Test Scenarios
 
-| Scenario | Description |
-|----------|-------------|
-| Mega Menu Navigation | Navigate to "Production comptable" via Solutions dropdown |
-| Contact Form Submission | Fill and submit demo request form with HubSpot iframe |
+### 1. Mega Menu Navigation
+- Opens Solutions dropdown menu
+- Navigates to "Production comptable" page
+- Verifies page heading contains expected text
+
+### 2. Contact Form Submission
+- Navigates to demo request page
+- Handles HubSpot iframe form
+- Fills all required fields
+- Submits form successfully
 
 ## Key Features
-- **Dynamic waits** - No static `cy.wait()`, uses visibility assertions
+- **Dynamic waits** - Uses visibility assertions instead of static waits
 - **Cookie handling** - Automatic Axeptio banner dismissal
-- **Iframe support** - HubSpot form interaction
+- **Iframe support** - HubSpot embedded form interaction
 - **Video recording** - All test runs are recorded
-- **Screenshot on failure** - Automatic capture
-
-## Prerequisites
-- Node.js 18+
-- Allure CLI (`brew install allure`)
+- **Screenshot on failure** - Automatic capture for debugging
 
 ## Jenkins CI/CD
 
-A `Jenkinsfile` is included for pipeline integration.
+A `Jenkinsfile` is included at the repository root for pipeline integration.
 
 ### Pipeline Stages
-1. **Install Dependencies** - `npm ci`
-2. **Run Cypress Tests** - Executes all tests headlessly
-3. **Generate Allure Report** - Creates test report
+1. **Install Dependencies** - Runs `npm install`
+2. **Run Cypress Tests** - Executes all test scenarios
+3. **Generate Allure Report** - Creates detailed test report
 
-### Jenkins Requirements
-- NodeJS plugin configured
-- Allure plugin installed
-- Pipeline project pointing to this repo
+### Jenkins Setup
+1. Create a new Pipeline job
+2. Configure SCM: `https://github.com/hakantetik44/hiring.git`
+3. Branch: `*/hakan`
+4. Script Path: `Jenkinsfile`
+5. Requires: Allure Jenkins Plugin
 
 ### Artifacts
+After each build:
 - Videos: `cypress/videos/`
 - Screenshots: `cypress/screenshots/`
-- Allure Results: `allure-results/`
+- Allure Report: Available in Jenkins UI
+
+## Prerequisites
+- Node.js 18+
+- npm
+- Allure CLI (`brew install allure`)
+- Jenkins with Allure Plugin (for CI/CD)
+
+## Author
+Hakan Tetik - QA Automation Engineer
