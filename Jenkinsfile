@@ -1,14 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        nodejs 'NodeJS'
-    }
-
-    environment {
-        CI = 'true'
-    }
-
     stages {
         stage('Install Dependencies') {
             steps {
@@ -39,9 +31,14 @@ pipeline {
         always {
             dir('QA/bonus-task') {
                 archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
-                archiveArtifacts artifacts: 'cypress/screenshots/**/*', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
             }
+        }
+        success {
+            echo 'Tests completed successfully!'
+        }
+        failure {
+            echo 'Tests failed. Check logs for details.'
         }
     }
 }
