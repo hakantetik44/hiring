@@ -1,4 +1,4 @@
-# Fulll.fr E2E Automation (Bonus Task)
+# Fulll E2E Automation (Bonus Task)
 
 ## Overview
 End-to-end test automation suite for the **fulll.fr** production website. Built with Cypress, Cucumber (BDD), and Allure for professional reporting.
