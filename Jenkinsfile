@@ -1,11 +1,16 @@
 pipeline {
     agent any
 
+    environment {
+        PATH = "/usr/local/bin:/opt/homebrew/bin:$PATH"
+        NODE_HOME = "/Users/macbook/.nvm/versions/node/v20.19.5"
+    }
+
     stages {
         stage('Install Dependencies') {
             steps {
                 dir('QA/bonus-task') {
-                    sh 'npm ci || npm install'
+                    sh '${NODE_HOME}/bin/npm ci || ${NODE_HOME}/bin/npm install'
                 }
             }
         }
@@ -13,7 +18,7 @@ pipeline {
         stage('Run Cypress Tests') {
             steps {
                 dir('QA/bonus-task') {
-                    sh 'npm test || true'
+                    sh '${NODE_HOME}/bin/npm test || true'
                 }
             }
         }
@@ -21,7 +26,7 @@ pipeline {
         stage('Generate Allure Report') {
             steps {
                 dir('QA/bonus-task') {
-                    sh 'npm run allure:report || true'
+                    sh 'allure generate allure-results --clean -o allure-report || true'
                 }
             }
         }
@@ -33,12 +38,13 @@ pipeline {
                 archiveArtifacts artifacts: 'cypress/videos/**/*', allowEmptyArchive: true
                 archiveArtifacts artifacts: 'allure-report/**/*', allowEmptyArchive: true
             }
+            allure includeProperties: false, jdk: '', results: [[path: 'QA/bonus-task/allure-results']]
         }
         success {
-            echo 'Tests completed successfully!'
+            echo 'All tests passed!'
         }
         failure {
-            echo 'Tests failed. Check logs for details.'
+            echo 'Tests failed. Check Allure report for details.'
         }
     }
 }
