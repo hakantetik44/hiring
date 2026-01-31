@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+
+    tools {
+        nodejs 'NodeJS'
+    }
+
+    environment {
+        CI = 'true'
+        CYPRESS_CACHE_FOLDER = "${WORKSPACE}/.cypress-cache"
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                dir('QA/bonus-task') {
+                    sh 'npm ci'
+                }
+            }
+        }
+
+        stage('Run Cypress Tests') {
+            steps {
+                dir('QA/bonus-task') {
+                    sh 'npm test'
+                }
+            }
+            post {
+                always {
+                    dir('QA/bonus-task') {
+                        archiveArtifacts artifacts: 'cypress/videos/**/*.mp4', allowEmptyArchive: true
+                        archiveArtifacts artifacts: 'cypress/screenshots/**/*.png', allowEmptyArchive: true
+                    }
+                }
+            }
+        }
+
+        stage('Generate Allure Report') {
+            steps {
+                dir('QA/bonus-task') {
+                    sh 'npm run allure:report'
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            dir('QA/bonus-task') {
+                allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
+            }
+        }
+        success {
+            echo 'Tests passed successfully!'
+        }
+        failure {
+            echo 'Tests failed. Check Allure report for details.'
+        }
+    }
+}

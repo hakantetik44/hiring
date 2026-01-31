@@ -1,0 +1,22 @@
+export const FulllSiteLocators = {
+    cookieAcceptButton: '#axeptio_btn_acceptAll',
+    solutionsDropdown: '#w-dropdown-toggle-0',
+    solutionMissionComptable: 'a[href="/mission-comptable"]',
+    pageHeading: 'h1',
+    firstNameInput: 'input[name*="firstname"], input[name*="prenom"]',
+    lastNameInput: 'input[name*="lastname"]',
+    companyInput: 'input[name="company"], input[name*="societe"], input[name*="entreprise"]',
+    jobTitleInput: 'input[name*="jobtitle"], input[name*="fonction"]',
+    numberOfUsersInput: '.hsfc-NumberInput input[inputmode="decimal"], input[inputmode="decimal"]',
+    commentHowKnownInput: '.hsfc-DropdownField:has(label:contains("Comment avez-vous connu")) input[role="combobox"]',
+    projectTypeInput: '.hsfc-DropdownField:has(label:contains("Projet")) input[role="combobox"]',
+    repriseDonneesInput: '.hsfc-DropdownField:has(label:contains("Reprise")) input[role="combobox"]',
+    implementationTimeSelect: '.hsfc-DropdownField:has(label:contains("Mise en place")) input[role="combobox"]',
+    softwareUsedInput: 'input[name*="logiciel"]',
+    departmentSelect: '.hsfc-DropdownField:has(label:contains("Département")) input[role="combobox"]',
+    detailOrigineInput: 'input[name*="detail_origine"]',
+    emailInput: 'input[name*="email"]',
+    phoneInput: 'input[name="mobilephone"], input[name="phone"], input[type="tel"]',
+    messageInput: 'textarea[name*="message"], textarea',
+    submitButton: 'input[type="submit"], button[type="submit"]'
+};
