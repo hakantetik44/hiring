@@ -1,5 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","4439","Navigate to Production Comptable solution via Mega Menu","Fulll Website User Interactions","2026-01-31","passed","2026-01-31","","","",""
-"","3934","Submit a contact request with valid data (example #2)","Fulll Website User Interactions","2026-01-31","passed","2026-01-31","","","",""
-"","6622","Filter blog articles by category","Fulll Website User Interactions","2026-01-30","passed","2026-01-30","","","",""
-"","8886","Submit a contact request with valid data (example #1)","Fulll Website User Interactions","2026-01-31","passed","2026-01-31","","","",""
