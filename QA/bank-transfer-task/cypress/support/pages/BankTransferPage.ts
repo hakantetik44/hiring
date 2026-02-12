@@ -4,42 +4,42 @@ import { Locators } from "../locators/BankTransferLocators";
 class BankTransferPage extends BasePage {
 
     visit() {
-        this.navigateTo('/transfers/create');
+        this.open('/transfers/create');
     }
 
-    fillField(fieldName: string, value: string) {
-        this.typeText(Locators.formField(fieldName), value);
+    fillTransferDetails(fieldName: string, value: string) {
+        this.setFieldValue(Locators.formField(fieldName), value);
     }
 
-   selectMode(mode: string) {
-        const selector = Locators.formField(`mode-${mode.toLowerCase()}`);
-        cy.get(selector).check();
+    selectTransferMode(mode: string) {
+        this.selectCheckboxOrRadio(Locators.formField(`mode-${mode.toLowerCase()}`));
     }
 
-    setDate(phrase: string) {
+    setDynamicDate(phrase: string) {
         const date = new Date();
-        if (phrase === 'tomorrow') date.setDate(date.getDate() + 1);
-        else if (phrase === 'yesterday') date.setDate(date.getDate() - 1);
-        else if (phrase.includes('days')) date.setDate(date.getDate() + parseInt(phrase));
+        const daysToAdd = phrase === 'tomorrow' ? 1 :
+            phrase === 'yesterday' ? -1 :
+                parseInt(phrase) || 0;
 
+        date.setDate(date.getDate() + daysToAdd);
         const formattedDate = date.toISOString().split('T')[0];
-        this.typeText(Locators.formField('transfer-date'), formattedDate);
+        this.setFieldValue(Locators.formField('transfer-date'), formattedDate);
     }
 
-    submit() {
-        this.click(Locators.submitButton);
+    submitTransfer() {
+        this.clickElement(Locators.submitButton);
     }
 
-    verifyNotification(text: string) {
-        this.verifyText(Locators.notification, text);
+    validateSuccessMessage(expectedText: string) {
+        this.verifyElementContainsText(Locators.notification, expectedText);
     }
 
-    verifyErrorVisible(field: string) {
-        this.verifyVisible(Locators.errorMessage(field));
+    validateFieldVisibility(field: string, isVisible: boolean) {
+        this.checkElementPresence(Locators.errorMessage(field), isVisible);
     }
 
-    verifyFormHidden() {
-        this.verifyNotExist(Locators.submitButton);
+    validateFormAccessibility(shouldBeVisible: boolean) {
+        this.checkElementPresence(Locators.submitButton, shouldBeVisible);
     }
 }
 

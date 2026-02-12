@@ -11,34 +11,34 @@ Given("the user navigates to the {string} creation page", () => {
 
 When("they fill in the transfer form with the following data:", (table: any) => {
     const data = table.rowsHash();
-    bankTransferPage.fillField("beneficiary-name", data["Beneficiary Name"]);
-    bankTransferPage.fillField("iban", data["IBAN"]);
-    bankTransferPage.fillField("label", data["Label"]);
-    bankTransferPage.fillField("amount", data["Amount"]);
+    bankTransferPage.fillTransferDetails("beneficiary-name", data["Beneficiary Name"]);
+    bankTransferPage.fillTransferDetails("iban", data["IBAN"]);
+    bankTransferPage.fillTransferDetails("label", data["Label"]);
+    bankTransferPage.fillTransferDetails("amount", data["Amount"]);
 });
 
 When("they enter an amount of {string}", (amount: string) => {
-    bankTransferPage.fillField("amount", amount);
+    bankTransferPage.fillTransferDetails("amount", amount);
 });
 
 When("they enter an IBAN with length {int}", (length: number) => {
-    bankTransferPage.fillField("iban", "A".repeat(length));
+    bankTransferPage.fillTransferDetails("iban", "A".repeat(length));
 });
 
 When("they enter a label {string}", (label: string) => {
-    bankTransferPage.fillField("label", label);
+    bankTransferPage.fillTransferDetails("label", label);
 });
 
 When("they select the {string} transfer mode", (mode: string) => {
-    bankTransferPage.selectMode(mode);
+    bankTransferPage.selectTransferMode(mode);
 });
 
 When("they set the transfer date to {string}", (phrase: string) => {
-    bankTransferPage.setDate(phrase);
+    bankTransferPage.setDynamicDate(phrase);
 });
 
 When("they submit the transfer form", () => {
-    bankTransferPage.submit();
+    bankTransferPage.submitTransfer();
 });
 
 When("they attempt to access the bank transfer creation page", () => {
@@ -46,37 +46,31 @@ When("they attempt to access the bank transfer creation page", () => {
 });
 
 Then("a success notification {string} should be displayed", (message: string) => {
-    bankTransferPage.verifyNotification(message);
+    bankTransferPage.validateSuccessMessage(message);
 });
 
 Then("they should see a validation message for {string} as {string}", (_: string, status: string) => {
-    if (status === "Success") {
-        bankTransferPage.verifyNotification("created");
-    } else {
-        bankTransferPage.verifyErrorVisible("amount");
-    }
+    const isError = status === "Error";
+    isError ? bankTransferPage.validateFieldVisibility("amount", true) :
+        bankTransferPage.validateSuccessMessage("created");
 });
 
 Then("they should see a validation status for {string} as {string}", (field: string, status: string) => {
-    if (status === "Error") {
-        bankTransferPage.verifyErrorVisible(field.toLowerCase());
-    }
+    bankTransferPage.validateFieldVisibility(field.toLowerCase(), status === "Error");
 });
 
 Then("the system should {string} the date", (outcome: string) => {
-    if (outcome === "Reject") {
-        bankTransferPage.verifyErrorVisible("transfer-date");
-    }
+    bankTransferPage.validateFieldVisibility("transfer-date", outcome === "Reject");
 });
 
 Then("they should see an error for the {string} field", (field: string) => {
-    bankTransferPage.verifyErrorVisible(field.toLowerCase());
+    bankTransferPage.validateFieldVisibility(field.toLowerCase(), true);
 });
 
 Then("they should be redirected to the {string}", (page: string) => {
-    cy.url().should('include', page.toLowerCase());
+    bankTransferPage.verifyUrlMatching(page);
 });
 
 Then("the transfer form should not be accessible", () => {
-    bankTransferPage.verifyFormHidden();
+    bankTransferPage.validateFormAccessibility(false);
 });

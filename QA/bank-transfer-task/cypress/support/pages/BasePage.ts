@@ -1,25 +1,30 @@
 export class BasePage {
-    navigateTo(path: string) {
+    open(path: string) {
         cy.visit(path);
     }
 
-    typeText(selector: string, text: string) {
-        cy.get(selector).clear().type(text);
+    setFieldValue(selector: string, value: string) {
+        cy.get(selector).should('be.visible').clear().type(value);
     }
 
-    click(selector: string) {
-        cy.get(selector).click();
+    clickElement(selector: string) {
+        cy.get(selector).should('be.visible').click();
     }
 
-    verifyText(selector: string, text: string) {
-        cy.get(selector).should('contain', text);
+    selectCheckboxOrRadio(selector: string) {
+        cy.get(selector).check();
     }
 
-    verifyVisible(selector: string) {
-        cy.get(selector).should('be.visible');
+    checkElementPresence(selector: string, isVisible: boolean) {
+        const state = isVisible ? 'be.visible' : 'not.exist';
+        cy.get(selector).should(state);
     }
 
-    verifyNotExist(selector: string) {
-        cy.get(selector).should('not.exist');
+    verifyElementContainsText(selector: string, text: string) {
+        cy.get(selector).should('be.visible').and('contain', text);
+    }
+
+    verifyUrlMatching(path: string) {
+        cy.url().should('include', path.toLowerCase());
     }
 }
