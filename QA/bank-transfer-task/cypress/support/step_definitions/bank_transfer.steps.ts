@@ -1,7 +1,12 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { bankTransferPage } from "../pages/BankTransferPage";
 
-Given(/^the user is logged in as a(?:n)? "([^"]*)"$/, (role: string) => {
+// Login adımları - Dil bilgisi uyumu için iki ayrı tanım (Junior-friendly)
+Given("the user is logged in as an {string}", (role: string) => {
+    cy.loginAs(role);
+});
+
+Given("the user is logged in as a {string}", (role: string) => {
     cy.loginAs(role);
 });
 
@@ -50,13 +55,33 @@ Then("a success notification {string} should be displayed", (message: string) =>
 });
 
 Then("they should see a validation message for {string} as {string}", (_: string, status: string) => {
-    if (status === "Success") bankTransferPage.verifyNotification("created");
+    if (status === "Success") {
+        bankTransferPage.verifyNotification("created");
+    } else {
+        bankTransferPage.verifyErrorVisible("amount");
+    }
 });
 
-Then("they should see a validation status for {string} as {string}", () => { });
-Then("the system should {string} the date", () => { });
-Then("they should see an error for the {string} field", () => { });
+Then("they should see a validation status for {string} as {string}", (field: string, status: string) => {
+    if (status === "Error") {
+        bankTransferPage.verifyErrorVisible(field.toLowerCase());
+    }
+});
+
+Then("the system should {string} the date", (outcome: string) => {
+    if (outcome === "Reject") {
+        bankTransferPage.verifyErrorVisible("transfer-date");
+    }
+});
+
+Then("they should see an error for the {string} field", (field: string) => {
+    bankTransferPage.verifyErrorVisible(field.toLowerCase());
+});
+
 Then("they should be redirected to the {string}", (page: string) => {
     cy.url().should('include', page.toLowerCase());
 });
-Then("the transfer form should not be accessible", () => { });
+
+Then("the transfer form should not be accessible", () => {
+    bankTransferPage.verifyFormHidden();
+});

@@ -12,7 +12,8 @@ class BankTransferPage extends BasePage {
     }
 
     selectMode(mode: string) {
-        cy.get(Locators.formField(`mode-${mode.toLowerCase()}`)).check();
+        const selector = Locators.formField(`mode-${mode.toLowerCase()}`);
+        cy.get(selector).check();
     }
 
     setDate(phrase: string) {
@@ -20,7 +21,9 @@ class BankTransferPage extends BasePage {
         if (phrase === 'tomorrow') date.setDate(date.getDate() + 1);
         else if (phrase === 'yesterday') date.setDate(date.getDate() - 1);
         else if (phrase.includes('days')) date.setDate(date.getDate() + parseInt(phrase));
-        this.typeText(Locators.formField('transfer-date'), date.toISOString().split('T')[0]);
+
+        const formattedDate = date.toISOString().split('T')[0];
+        this.typeText(Locators.formField('transfer-date'), formattedDate);
     }
 
     submit() {
@@ -29,6 +32,16 @@ class BankTransferPage extends BasePage {
 
     verifyNotification(text: string) {
         this.verifyText(Locators.notification, text);
+    }
+
+    // Yeni ekledik: Hata mesajı görünüyor mu?
+    verifyErrorVisible(field: string) {
+        cy.get(`[data-testid="error-${field}"]`).should('be.visible');
+    }
+
+    // Yeni ekledik: Form tamamen gizli mi?
+    verifyFormHidden() {
+        cy.get(Locators.submitButton).should('not.exist');
     }
 }
 
