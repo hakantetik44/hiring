@@ -1,11 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { bankTransferPage } from "../pages/BankTransferPage";
 
-Given("the user is logged in as an {string}", (role: string) => {
-    cy.loginAs(role);
-});
-
-Given("the user is logged in as a {string}", (role: string) => {
+Given(/^the user is logged in as a(?:n)? "([^"]*)"$/, (role: string) => {
     cy.loginAs(role);
 });
 
