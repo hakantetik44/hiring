@@ -7,8 +7,8 @@ class BankTransferPage extends BasePage {
         this.navigateTo('/transfers/create');
     }
 
-    fillField(field: string, value: string) {
-        this.typeText(Locators.formField(field), value);
+    fillField(fieldName: string, value: string) {
+        this.typeText(Locators.formField(fieldName), value);
     }
 
     selectMode(mode: string) {
@@ -34,14 +34,12 @@ class BankTransferPage extends BasePage {
         this.verifyText(Locators.notification, text);
     }
 
-    // Yeni ekledik: Hata mesajı görünüyor mu?
     verifyErrorVisible(field: string) {
-        cy.get(`[data-testid="error-${field}"]`).should('be.visible');
+        this.verifyVisible(Locators.errorMessage(field));
     }
 
-    // Yeni ekledik: Form tamamen gizli mi?
     verifyFormHidden() {
-        cy.get(Locators.submitButton).should('not.exist');
+        this.verifyNotExist(Locators.submitButton);
     }
 }
 

@@ -1,33 +1,25 @@
 export class BasePage {
-    protected navigateTo(path: string) {
+    navigateTo(path: string) {
         cy.visit(path);
     }
 
-    protected typeText(selector: string, text: string) {
+    typeText(selector: string, text: string) {
         cy.get(selector).clear().type(text);
     }
 
-    protected clickOn(selector: string) {
+    click(selector: string) {
         cy.get(selector).click();
     }
 
-    protected checkElement(selector: string) {
-        cy.get(selector).check();
+    verifyText(selector: string, text: string) {
+        cy.get(selector).should('contain', text);
     }
 
-    protected verifyVisible(selector: string) {
+    verifyVisible(selector: string) {
         cy.get(selector).should('be.visible');
     }
 
-    protected verifyText(selector: string, text: string) {
-        cy.get(selector).should('be.visible').and('contain', text);
-    }
-
-    protected verifyNotExist(selector: string) {
+    verifyNotExist(selector: string) {
         cy.get(selector).should('not.exist');
-    }
-
-    protected verifyUrl(path: string) {
-        cy.url().should('include', path);
     }
 }
