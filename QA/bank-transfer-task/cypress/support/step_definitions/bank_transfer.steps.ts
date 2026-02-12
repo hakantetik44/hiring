@@ -1,12 +1,7 @@
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
 import { bankTransferPage } from "../pages/BankTransferPage";
 
-// Login adımları - Dil bilgisi uyumu için iki ayrı tanım (Junior-friendly)
 Given("the user is logged in as an {string}", (role: string) => {
-    cy.loginAs(role);
-});
-
-Given("the user is logged in as a {string}", (role: string) => {
     cy.loginAs(role);
 });
 

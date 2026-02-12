@@ -11,7 +11,7 @@ class BankTransferPage extends BasePage {
         this.typeText(Locators.formField(fieldName), value);
     }
 
-    selectMode(mode: string) {
+   selectMode(mode: string) {
         const selector = Locators.formField(`mode-${mode.toLowerCase()}`);
         cy.get(selector).check();
     }
