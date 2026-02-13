@@ -34,7 +34,7 @@ When("they select the {string} transfer mode", (mode: string) => {
 });
 
 When("they set the transfer date to {string}", (phrase: string) => {
-    bankTransferPage.setDynamicDate(phrase);
+    bankTransferPage.setDate(phrase);
 });
 
 When("they submit the transfer form", () => {

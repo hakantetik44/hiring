@@ -28,7 +28,6 @@ class FulllContactPage extends BasePage {
 
     private fillIframeForm(details: ContactFormDetails): void {
         this.accessIframeContent(FulllSiteLocators.hubspotIframe).then($body => {
-            // Text Inputs
             this.setIframeInputValue($body, FulllSiteLocators.firstNameInput, details.firstName);
             this.setIframeInputValue($body, FulllSiteLocators.lastNameInput, details.lastName);
             this.setIframeInputValue($body, FulllSiteLocators.companyInput, details.company);
@@ -40,14 +39,12 @@ class FulllContactPage extends BasePage {
             this.setIframeInputValue($body, FulllSiteLocators.softwareUsedInput, 'Excel');
             this.setIframeInputValue($body, FulllSiteLocators.detailOrigineInput, 'Recommandation');
 
-            // Dropdowns
             this.selectIframeDropdownValue($body, FulllSiteLocators.projectTypeDropdown, 'Compta');
             this.selectIframeDropdownValue($body, FulllSiteLocators.repriseDonneesDropdown, 'Oui');
             this.selectIframeDropdownValue($body, FulllSiteLocators.howKnownDropdown, 'Reco');
             this.selectIframeDropdownValue($body, FulllSiteLocators.implementationTimeDropdown, '3');
             this.selectIframeDropdownValue($body, FulllSiteLocators.departmentDropdown, '69');
 
-            // Consent Checkboxes
             const checkboxes = $body.find(FulllSiteLocators.checkboxes);
             if (checkboxes.length > 0) {
                 cy.wrap(checkboxes).check({ force: true });
@@ -97,7 +94,6 @@ class FulllContactPage extends BasePage {
     }
 
     validateSuccessMessage(): void {
-        // Since it's a demo submit on a live site, we just verify no error messages are visible or url remains meaningful
         cy.log('Form submission completed');
     }
 

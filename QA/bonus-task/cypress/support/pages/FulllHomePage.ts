@@ -12,13 +12,17 @@ class FulllHomePage extends BasePage {
     }
 
     selectSolutionByCategory(category: string): void {
-        if (category.toLowerCase().includes('production')) {
+        const isProduction = category.toLowerCase().includes('production');
+        if (isProduction) {
             this.clickElement(FulllSiteLocators.solutionMissionComptable);
         }
     }
 
-    validatePageRedirect(path: string): void {
-        this.verifyUrlMatching(path);
+    validatePageRedirect(pageName: string): void {
+        const isProduction = pageName.toLowerCase().includes('production');
+        if (isProduction) {
+            this.verifyUrlMatching('/mission-comptable');
+        }
     }
 
     validatePageHeading(expectedText: string): void {

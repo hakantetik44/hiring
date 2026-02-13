@@ -27,4 +27,14 @@ export class BasePage {
     verifyUrlMatching(path: string) {
         cy.url().should('include', path.toLowerCase());
     }
+
+    calculateDate(phrase: string): string {
+        const date = new Date();
+        const daysToAdd = phrase === 'tomorrow' ? 1 :
+            phrase === 'yesterday' ? -1 :
+                parseInt(phrase) || 0;
+
+        date.setDate(date.getDate() + daysToAdd);
+        return date.toISOString().split('T')[0];
+    }
 }

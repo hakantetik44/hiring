@@ -1,12 +1,7 @@
 export const FulllSiteLocators = {
-    // Shared
     cookieAcceptButton: '#axeptio_btn_acceptAll',
-
-    // Home Page
     solutionsDropdown: '#w-dropdown-toggle-0',
     solutionMissionComptable: 'a[href="/mission-comptable"]',
-
-    // Contact Page
     hubspotIframe: 'iframe[src*="forms"]',
     firstNameInput: 'input[name*="firstname"], input[name*="prenom"]',
     lastNameInput: 'input[name*="lastname"]',
@@ -18,15 +13,11 @@ export const FulllSiteLocators = {
     numberOfUsersInput: '.hsfc-NumberInput input[inputmode="decimal"], input[inputmode="decimal"]',
     softwareUsedInput: 'input[name*="logiciel"]',
     detailOrigineInput: 'input[name*="detail_origine"]',
-
-    // Dropdowns
     projectTypeDropdown: '.hsfc-DropdownField:has(label:contains("Projet")) input[role="combobox"]',
     repriseDonneesDropdown: '.hsfc-DropdownField:has(label:contains("Reprise")) input[role="combobox"]',
     implementationTimeDropdown: '.hsfc-DropdownField:has(label:contains("Mise en place")) input[role="combobox"]',
     departmentDropdown: '.hsfc-DropdownField:has(label:contains("Département")) input[role="combobox"]',
     howKnownDropdown: '.hsfc-DropdownField:has(label:contains("Comment avez-vous connu")) input[role="combobox"]',
-
-    // Actions
     submitButton: 'input[type="submit"], button[type="submit"]',
     dropdownOptionsList: '.hsfc-DropdownOptions__List__ListItem',
     dropdownSearchBox: 'input[role="searchbox"], input[placeholder="Rechercher"]',

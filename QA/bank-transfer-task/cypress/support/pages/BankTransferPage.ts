@@ -15,14 +15,8 @@ class BankTransferPage extends BasePage {
         this.selectCheckboxOrRadio(Locators.formField(`mode-${mode.toLowerCase()}`));
     }
 
-    setDynamicDate(phrase: string) {
-        const date = new Date();
-        const daysToAdd = phrase === 'tomorrow' ? 1 :
-            phrase === 'yesterday' ? -1 :
-                parseInt(phrase) || 0;
-
-        date.setDate(date.getDate() + daysToAdd);
-        const formattedDate = date.toISOString().split('T')[0];
+    setDate(phrase: string) {
+        const formattedDate = this.calculateDate(phrase);
         this.setFieldValue(Locators.formField('transfer-date'), formattedDate);
     }
 
