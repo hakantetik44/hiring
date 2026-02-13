@@ -1,19 +1,30 @@
 export class BasePage {
     protected readonly defaultTimeout = 15000;
 
-    waitForElementAndClick(selector: string): void {
-        cy.get(selector, { timeout: this.defaultTimeout }).should('be.visible').first().click({ force: true });
-    }
-
-    waitForElementAndType(selector: string, text: string): void {
-        cy.get(selector, { timeout: this.defaultTimeout }).should('be.visible').first().clear().type(text);
-    }
-
-    navigateTo(path: string): void {
+    open(path: string): void {
         cy.visit(path);
     }
 
-    verifyUrl(expectedUrl: string): void {
+    setFieldValue(selector: string, value: string): void {
+        cy.get(selector, { timeout: this.defaultTimeout })
+            .should('be.visible')
+            .first()
+            .clear()
+            .type(value);
+    }
+
+    clickElement(selector: string): void {
+        cy.get(selector, { timeout: this.defaultTimeout })
+            .should('be.visible')
+            .first()
+            .click({ force: true });
+    }
+
+    waitForVisible(selector: string): void {
+        cy.get(selector, { timeout: this.defaultTimeout }).should('be.visible');
+    }
+
+    verifyUrlMatching(expectedUrl: string): void {
         cy.url().should('include', expectedUrl);
     }
 
@@ -26,11 +37,17 @@ export class BasePage {
             });
     }
 
-    acceptCookies(selector: string): void {
+    handleCookieBanner(selector: string): void {
         cy.get('body').then($body => {
             if ($body.find(selector).length > 0) {
                 cy.get(selector).should('be.visible').click({ force: true });
             }
         });
+    }
+
+    calculateDate(daysToAdd: number): string {
+        const date = new Date();
+        date.setDate(date.getDate() + daysToAdd);
+        return date.toISOString().split('T')[0];
     }
 }

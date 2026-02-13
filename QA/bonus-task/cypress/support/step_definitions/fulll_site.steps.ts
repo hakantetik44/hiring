@@ -12,12 +12,12 @@ Given('the user is on the Fulll Contact page', () => {
 
 When('they open the {string} menu', (menuName: string) => {
     if (menuName.toLowerCase() === 'solutions') {
-        fulllHomePage.openSolutionsMenu();
+        fulllHomePage.navigateToSolutionsMenu();
     }
 });
 
 When('they select the {string} solution', (solutionName: string) => {
-    fulllHomePage.selectSolution(solutionName);
+    fulllHomePage.selectSolutionByCategory(solutionName);
 });
 
 When('they fill the contact form with:', (dataTable: any) => {
@@ -37,13 +37,13 @@ When('they submit the form', () => {
 });
 
 Then('they should be redirected to the {string} page', (pageName: string) => {
-    fulllHomePage.verifyPageRedirect(pageName);
+    fulllHomePage.validatePageRedirect(pageName);
 });
 
 Then('the page heading should contain {string}', (expectedText: string) => {
-    fulllHomePage.verifyPageHeading(expectedText);
+    fulllHomePage.validatePageHeading(expectedText);
 });
 
 Then('they should see a success message', () => {
-    fulllContactPage.verifySuccessMessage();
+    fulllContactPage.validateSuccessMessage();
 });

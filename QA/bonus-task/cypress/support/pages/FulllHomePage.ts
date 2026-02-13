@@ -3,27 +3,25 @@ import { FulllSiteLocators } from '../locators/FulllSiteLocators';
 
 class FulllHomePage extends BasePage {
     open(): void {
-        this.navigateTo('/');
-        this.acceptCookies(FulllSiteLocators.cookieAcceptButton);
+        super.open('/');
+        this.handleCookieBanner(FulllSiteLocators.cookieAcceptButton);
     }
 
-    openSolutionsMenu(): void {
-        this.waitForElementAndClick(FulllSiteLocators.solutionsDropdown);
+    navigateToSolutionsMenu(): void {
+        this.clickElement(FulllSiteLocators.solutionsDropdown);
     }
 
-    selectSolution(solutionName: string): void {
-        if (solutionName.toLowerCase().includes('production')) {
-            this.waitForElementAndClick(FulllSiteLocators.solutionMissionComptable);
+    selectSolutionByCategory(category: string): void {
+        if (category.toLowerCase().includes('production')) {
+            this.clickElement(FulllSiteLocators.solutionMissionComptable);
         }
     }
 
-    verifyPageRedirect(expectedPage: string): void {
-        if (expectedPage.toLowerCase().includes('production')) {
-            this.verifyUrl('/mission-comptable');
-        }
+    validatePageRedirect(path: string): void {
+        this.verifyUrlMatching(path);
     }
 
-    verifyPageHeading(expectedText: string): void {
+    validatePageHeading(expectedText: string): void {
         this.verifyHeadingContains(expectedText);
     }
 }
